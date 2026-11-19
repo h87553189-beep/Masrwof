@@ -1,0 +1,30 @@
+﻿@page "/expense/{action}"
+@page "/expense/{action}/{id:guid}"
+
+@inject IExpenseService ExpenseService
+@inject NavigationManager Navigation
+<div class="container mt-4" dir="rtl" style="text-align: right;">
+    
+ <div class="card shadow-sm border-0 mx-auto" style="max-width: 700px;">
+        <div class="card header @HeaderClass text-white p-3 d-flex justify-content-between align-items-center">
+<h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
+		    <RadzioIcon Icon="@isReadOnly ? "visibility" : Action.Equals("edit", StringComparison.OrdinalIgnoreCase)? "edit" : "add_circle")"style="font-size: 1.5rem;" />
+</h5>
+	<span class= "badge bg-light text-dark fw-bold px-3 py-2">@Action.ToUpper()</span>
+       </div>
+<div class="card-body p-4">
+        <EditForm Model="@expense" OnValidSubmit="HandleValidSubmit">
+	  <DataAnnotationsValidator />
+	  <ValidationSummary class ="text-danger small mp-3" />
+<div class="mb-3">
+	    <label class="form-label fw-semibold text-secondary d-flex align-items-center">
+	    <RadzenIcon Icon="description" style="font-size: 1.2rem;" />
+             @bind-Value="expense.Name" 
+            disabled="@isReadOnly" />
+</div>
+<div class="row">
+<div class="col-md-6 mb-3">
+	    <label class="form-label fw-semibold text-secondary d-flex align-items-center gap-1">
+	    <RadzenIcon Icon="category" style="font-size: 1.2rem;" />
+	  @bind-Value="expense.Category" 
+	  disabled="@isReadOnly" />
